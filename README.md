@@ -1,3 +1,9 @@
+versions verified:
+
+gym 0.9.3
+
+tensorflow 1.4.1
+
 # Human-Level Control through Deep Reinforcement Learning
 
 Tensorflow implementation of [Human-Level Control through Deep Reinforcement Learning](http://home.uchicago.edu/~arij/journalclub/papers/2015_Mnih_et_al.pdf).
