@@ -1,8 +1,9 @@
+        python main.py --is_train=True --use_gpu=False --display=True
+
 versions verified:
 
-gym 0.9.3
-
-tensorflow 1.4.1
+        gym 0.9.3
+        tensorflow 1.4.1
 
 # Human-Level Control through Deep Reinforcement Learning
 
