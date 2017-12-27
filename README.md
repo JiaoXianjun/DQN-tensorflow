@@ -1,5 +1,6 @@
 gym test:
 
+	sudo pip install -e gym
 	python test_script_gym.py
 
 DQN:

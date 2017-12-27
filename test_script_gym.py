@@ -1,3 +1,6 @@
+# before run this
+# please sudo pip install -e gym
+
 import gym
 import gym_specgame
 
