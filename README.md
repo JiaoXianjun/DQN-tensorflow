@@ -1,3 +1,9 @@
+gym test:
+
+	python test_script_gym.py
+
+DQN:
+
         python main.py --is_train=True --use_gpu=False --display=True
 
 versions verified:

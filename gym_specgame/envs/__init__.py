@@ -1,0 +1,2 @@
+from gym_specgame.envs.specgame_env import specgame_env
+from gym_specgame.envs.specgame_extrahard_env import specgame_extrahard_env
