@@ -1,9 +1,13 @@
-gym test:
+play game:
+
+  python test_game.py
+  
+dqn game test:
 
 	sudo pip install -e gym
-	python test_script_gym.py
+	python test_dqn_game.py
 
-DQN:
+DQN original:
 
         python main.py --is_train=True --use_gpu=False --display=True
 
