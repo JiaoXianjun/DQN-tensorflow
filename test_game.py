@@ -1,12 +1,18 @@
 import curses
 import time
 
-def fill_disp_win(win, lane_data):
-  print lane_data
-  for i in range(len(lane_data)):
-    win.addch(1,i,lane_data[i])
+def fill_disp_win(win, lane_data, score):
+  #print lane_data
+  #for i in range(len(lane_data)):
+  #  win.addch(1,i,lane_data[i])
+  
+  win.addstr(0,32,'score: '+str(score))
+  win.addstr(1,0,lane_data)
+  win.addch(0,70,' ')
+
   win.refresh()
 
+test_in_filename = 'game_input_fake.bin'
 stdscr = curses.initscr()
 
 curses.noecho()
@@ -14,23 +20,24 @@ curses.cbreak()
 stdscr.keypad(1)
 
 begin_x = 0; begin_y = 4
-height = 2; width = 32
+height = 2; width = 73
 win = curses.newwin(height, width, begin_y, begin_x)
+len_lane = 72
+lane_str = ''
+for i in range(len_lane):
+  lane_str = lane_str + ' '
+win.addch(0,len_lane-1,'v')
 #win = curses.newpad(height, width)
 
-lane_data = [80 for i in range(width)]
-lane_data[10] = 81
-lane_data[11] = 81
-lane_data[12] = 81
-
-#fill_disp_win(win, lane_data)
-for i in range(len(lane_data)-1):
-  #print lane_data[i], i
-  win.addch(1,i,lane_data[i])
-#win.refresh(0,0,0,0,1,31)
-win.refresh()
-
-time.sleep(2)
-
+test_in_file = open(test_in_filename,'rb')
+for i in range(2):
+  tmp_str_in = test_in_file.read(len_lane)
+  for j in range(len(tmp_str_in)):
+    tmp_str = lane_str[1:len_lane]+tmp_str_in[j]
+    fill_disp_win(win, tmp_str, 34)
+    lane_str = tmp_str
+    time.sleep(0.1)
+  
+test_in_file.close()
 curses.nocbreak(); stdscr.keypad(0); curses.echo(); curses.endwin()
 
