@@ -1,3 +1,7 @@
+game input file gen:
+
+  test_game_input_file_gen.m (use matlab or gnu octave)
+  
 play game:
 
   python test_game.py
