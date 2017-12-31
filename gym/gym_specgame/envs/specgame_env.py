@@ -1,12 +1,18 @@
 import gym
+from gym import error, spaces
 
 class specgame_env(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
+        self._action_set = [0,1]
+        self.action_space = spaces.Discrete(len(self._action_set))
+        self.lives = 10
+        print '__init__'
         pass
 
     def _step(self, action):
+        print '_step'
         """
 
         Parameters
@@ -36,13 +42,20 @@ class specgame_env(gym.Env):
                  use this for learning.
         """
         self._take_action(action)
-        self.status = self.env.step()
+        #self.status = self.env.step()
+        self.status = True
         reward = self._get_reward()
-        ob = self.env.getState()
-        episode_over = self.status != hfo_py.IN_GAME
+        #ob = self.env.getState()
+        ob = []
+        episode_over = self.status != True
         return ob, reward, episode_over, {}
 
     def _reset(self):
+        print '_reset'
+        pass
+
+    def reset(self):
+        print 'reset'
         pass
 
     def _render(self, mode='human', close=False):
@@ -53,9 +66,9 @@ class specgame_env(gym.Env):
 
     def _get_reward(self):
         """ Reward is given for XY. """
-        if self.status == FOOBAR:
+        if self.status == False:
             return 1
-        elif self.status == ABC:
-            return self.somestate ** 2
+        elif self.status == True:
+            return 2
         else:
             return 0

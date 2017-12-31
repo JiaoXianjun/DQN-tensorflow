@@ -9,7 +9,7 @@ play game:
 dqn game test:
 
 	sudo pip install -e gym
-	python test_dqn_game.py
+	python test_dqn_game.py --is_train=True --use_gpu=False --display=True
 
 DQN original:
 
