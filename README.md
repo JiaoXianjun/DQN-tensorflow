@@ -1,25 +1,25 @@
 game input file gen:
 
-	test_game_input_file_gen.m (use matlab or gnu octave) for test_game.py
-	test_dqn_game_input_file_gen.m for test_dqn_game.py
+    test_game_input_file_gen.m (use matlab or gnu octave) for test_game.py
+    test_dqn_game_input_file_gen.m for test_dqn_game.py
   
 play game:
 
-	python test_game.py
+    python test_game.py
   
 dqn game test:
 
-	sudo pip install -e gym
-	python test_dqn_game.py --is_train=True --use_gpu=False --display=True
+    sudo pip install -e gym
+    python test_dqn_game.py --is_train=True --use_gpu=False --display=True
 
 DQN original:
 
-  python main.py --is_train=True --use_gpu=False --display=True
+    python main.py --is_train=True --use_gpu=False --display=True
 
 versions verified:
 
-  gym 0.9.3
-  tensorflow 1.4.1
+    gym 0.9.3
+    tensorflow 1.4.1
 
 # Human-Level Control through Deep Reinforcement Learning
 
