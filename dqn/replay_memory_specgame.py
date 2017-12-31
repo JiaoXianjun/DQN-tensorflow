@@ -33,8 +33,7 @@ class ReplayMemory:
     # NB! screen is post-state, after action and reward
     self.actions[self.current] = action
     self.rewards[self.current] = reward
-    #self.screens[self.current, ...] = screen
-    self.screens[0] = screen
+    self.screens[self.current, ...] = screen
     self.terminals[self.current] = terminal
     self.count = max(self.count, self.current + 1)
     self.current = (self.current + 1) % self.memory_size
