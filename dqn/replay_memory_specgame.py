@@ -20,7 +20,8 @@ class ReplayMemory:
     self.screens = np.empty((cfg_set.num_lane_per_episode, 1, cfg_set.len_lane), dtype = np.int8)
     self.terminals = np.empty(self.memory_size, dtype = np.bool)
     self.history_length = config.history_length
-    self.dims = (config.screen_height, config.screen_width)
+    #self.dims = (config.screen_height, config.screen_width)
+    self.dims = (cfg_set.len_lane,1)
     self.batch_size = config.batch_size
     self.count = 0
     self.current = 0
@@ -30,6 +31,7 @@ class ReplayMemory:
     self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
 
   def add(self, screen, reward, action, terminal):
+    print screen.shape
     assert screen.shape == self.dims
     # NB! screen is post-state, after action and reward
     self.actions[self.current] = action
