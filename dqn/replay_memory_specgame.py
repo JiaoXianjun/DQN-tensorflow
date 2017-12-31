@@ -14,14 +14,18 @@ class ReplayMemory:
 
     self.cnn_format = config.cnn_format
     self.memory_size = config.memory_size
-    self.actions = np.empty(self.memory_size, dtype = np.uint8)
-    self.rewards = np.empty(self.memory_size, dtype = np.integer)
+    #self.actions = np.empty(self.memory_size, dtype = np.uint8)
+    #self.rewards = np.empty(self.memory_size, dtype = np.integer)
     #self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.float16)
+    #self.terminals = np.empty(self.memory_size, dtype = np.bool)
+    #self.history_length = config.history_length
+    self.actions = np.empty(cfg_set.num_lane_per_episode, dtype = np.uint8)
+    self.rewards = np.empty(cfg_set.num_lane_per_episode, dtype = np.integer)
     self.screens = np.empty((cfg_set.num_lane_per_episode, 1, cfg_set.len_lane), dtype = np.int8)
-    self.terminals = np.empty(self.memory_size, dtype = np.bool)
-    self.history_length = config.history_length
+    self.terminals = np.empty(cfg_set.num_lane_per_episode, dtype = np.bool)
+    self.history_length = cfg_set.num_history
     #self.dims = (config.screen_height, config.screen_width)
-    self.dims = (cfg_set.len_lane,1)
+    self.dims = (1,cfg_set.len_lane)
     self.batch_size = config.batch_size
     self.count = 0
     self.current = 0
@@ -39,7 +43,8 @@ class ReplayMemory:
     self.screens[self.current, ...] = screen
     self.terminals[self.current] = terminal
     self.count = max(self.count, self.current + 1)
-    self.current = (self.current + 1) % self.memory_size
+    #self.current = (self.current + 1) % self.memory_size
+    self.current = (self.current + 1) % cfg_set.num_lane_per_episode
 
   def getState(self, index):
     assert self.count > 0, "replay memory is empy, use at least --random_steps 1"

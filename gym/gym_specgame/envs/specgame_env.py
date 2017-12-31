@@ -80,7 +80,7 @@ class specgame_env(gym.Env):
             self.reward = 1
     
         self.lane_traffic = self.lane_traffic[1:cfg_set.len_lane]+tmp_pad
-        self.screen = np.array([ord(self.lane_traffic[i]) for i in range(len(self.lane_traffic))])
+        self.screen = np.array([ [ord(self.lane_traffic[i]) for i in range(len(self.lane_traffic))] ])
         
         self.num_sample = self.num_sample + 1
         if self.num_sample == cfg_set.num_sample_per_episode:
