@@ -1,11 +1,11 @@
 game input file gen:
 
-  test_game_input_file_gen.m (use matlab or gnu octave) for test_game.py
-  test_dqn_game_input_file_gen.m for test_dqn_game.py
+	test_game_input_file_gen.m (use matlab or gnu octave) for test_game.py
+	test_dqn_game_input_file_gen.m for test_dqn_game.py
   
 play game:
 
-  python test_game.py
+	python test_game.py
   
 dqn game test:
 
