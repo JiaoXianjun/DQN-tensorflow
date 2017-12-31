@@ -8,11 +8,11 @@ class specgame_env(gym.Env):
         self._action_set = [0,1]
         self.action_space = spaces.Discrete(len(self._action_set))
         self.lives = 10
-        print '__init__'
+        #print '__init__'
         pass
 
     def _step(self, action):
-        print '_step'
+        #print '_step'
         """
 
         Parameters

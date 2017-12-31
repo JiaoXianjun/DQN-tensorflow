@@ -1,6 +1,7 @@
 game input file gen:
 
-  test_game_input_file_gen.m (use matlab or gnu octave)
+  test_game_input_file_gen.m (use matlab or gnu octave) for test_game.py
+  test_dqn_game_input_file_gen.m for test_dqn_game.py
   
 play game:
 
@@ -13,12 +14,12 @@ dqn game test:
 
 DQN original:
 
-        python main.py --is_train=True --use_gpu=False --display=True
+  python main.py --is_train=True --use_gpu=False --display=True
 
 versions verified:
 
-        gym 0.9.3
-        tensorflow 1.4.1
+  gym 0.9.3
+  tensorflow 1.4.1
 
 # Human-Level Control through Deep Reinforcement Learning
 
