@@ -33,8 +33,6 @@ class ReplayMemory:
     # NB! screen is post-state, after action and reward
     self.actions[self.current] = action
     self.rewards[self.current] = reward
-    print '1'
-    print(screen)
     #self.screens[self.current, ...] = screen
     self.screens[0] = screen
     self.terminals[self.current] = terminal

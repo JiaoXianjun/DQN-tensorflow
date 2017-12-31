@@ -54,7 +54,6 @@ class Agent(BaseModel):
       # 2. act
       screen, reward, terminal = self.env.act(action, is_training=True)
       # 3. observe
-      print(screen)
       self.observe(screen, reward, action, terminal)
 
       if terminal:
