@@ -43,7 +43,8 @@ class Environment(object):
   def screen(self):
     #return imresize(rgb2gray(self._screen)/255., self.dims)
     #return [0 for i in range(72)]
-    return self.env.lane_traffic
+    #return self.env.lane_traffic
+    return self.env.screen
     #return cv2.resize(cv2.cvtColor(self._screen, cv2.COLOR_BGR2YCR_CB)/255., self.dims)[:,:,0]
 
   @property

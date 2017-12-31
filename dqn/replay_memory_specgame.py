@@ -4,6 +4,7 @@ import os
 import random
 import logging
 import numpy as np
+import cfg_set
 
 from .utils import save_npy, load_npy
 
@@ -16,7 +17,7 @@ class ReplayMemory:
     self.actions = np.empty(self.memory_size, dtype = np.uint8)
     self.rewards = np.empty(self.memory_size, dtype = np.integer)
     #self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.float16)
-    self.screens = [[] for i in range(config.history_length)]
+    self.screens = np.empty((cfg_set.num_lane_per_episode, 1, cfg_set.len_lane), dtype = np.int8)
     self.terminals = np.empty(self.memory_size, dtype = np.bool)
     self.history_length = config.history_length
     self.dims = (config.screen_height, config.screen_width)
@@ -29,7 +30,7 @@ class ReplayMemory:
     self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
 
   def add(self, screen, reward, action, terminal):
-    #assert screen.shape == self.dims
+    assert screen.shape == self.dims
     # NB! screen is post-state, after action and reward
     self.actions[self.current] = action
     self.rewards[self.current] = reward

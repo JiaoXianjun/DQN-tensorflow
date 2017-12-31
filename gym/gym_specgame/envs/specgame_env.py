@@ -1,20 +1,12 @@
 import gym
 from gym import error, spaces
-import sys
-sys.path.append('../../../../')
-from config_specgame import get_config
+import numpy as np
+import cfg_set
 
 class specgame_env(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-    
-        self.config_test_filename = 'dqn_game_input_fake.bin'
-        self.config_len_read = 1024
-        self.config_len_lane = 300
-        self.config_num_lane_per_episode = 9
-        self.config_num_sample_per_episode = self.config_len_lane*self.config_num_lane_per_episode
-  
         #self._action_set = [0, 1]
         #self.action_space = spaces.Discrete(len(self._action_set))
         #self.action_space = [0,1]
@@ -22,13 +14,14 @@ class specgame_env(gym.Env):
         
         self.lives=10
 
-        self.test_fid = open(self.config_test_filename,'rb')
+        self.test_fid = open(cfg_set.test_filename,'rb')
         self.num_consume = 0
         self.num_sample = 0
         self.read_buf = []
         self.lane_traffic = ''
-        for i in range(self.config_len_lane):
+        for i in range(cfg_set.len_lane):
           self.lane_traffic = self.lane_traffic + ' ' # an empty high way at first!
+        self.screen = np.empty((1,cfg_set.len_lane),dtype=np.int8)
         #print '__init__'
 
     def _step(self, action):
@@ -62,14 +55,14 @@ class specgame_env(gym.Env):
                  use this for learning.
         """
         if self.num_consume == 0:
-          self.read_buf = self.test_fid.read(self.config_len_read)
-          if len(self.read_buf) < self.config_len_read:
+          self.read_buf = self.test_fid.read(cfg_set.len_read)
+          if len(self.read_buf) < cfg_set.len_read:
             self.test_fid.seek(0)
-            self.read_buf = self.test_fid.read(self.config_len_read)
+            self.read_buf = self.test_fid.read(cfg_set.len_read)
         
         channel_current = self.read_buf[self.num_consume]
         self.num_consume = self.num_consume + 1
-        if self.num_consume == self.config_len_read:
+        if self.num_consume == cfg_set.len_read:
           self.num_consume = 0
         
         self._take_action(action, channel_current)
@@ -86,10 +79,11 @@ class specgame_env(gym.Env):
             tmp_pad = 'B'
             self.reward = 1
     
-        self.lane_traffic = self.lane_traffic[1:self.config_len_lane]+tmp_pad
+        self.lane_traffic = self.lane_traffic[1:cfg_set.len_lane]+tmp_pad
+        self.screen = np.array([ord(self.lane_traffic[i]) for i in range(len(self.lane_traffic))])
         
         self.num_sample = self.num_sample + 1
-        if self.num_sample == self.config_num_sample_per_episode:
+        if self.num_sample == cfg_set.num_sample_per_episode:
           self.num_sample = 0
           self.episode_over = True
           
