@@ -21,7 +21,7 @@ class specgame_env(gym.Env):
         self.lane_traffic = ''
         for i in range(cfg_set.len_lane):
           self.lane_traffic = self.lane_traffic + ' ' # an empty high way at first!
-        self.screen = np.zeros((1,cfg_set.len_lane),dtype=np.int8)
+        self.screen = np.zeros((1,cfg_set.len_lane),dtype=np.float16)
         #print '__init__'
 
     def _step(self, action):
@@ -66,21 +66,23 @@ class specgame_env(gym.Env):
           self.num_consume = 0
         
         self._take_action(action, channel_current)
-        return self.lane_traffic, self.reward, self.episode_over, {}
+        #return self.lane_traffic, self.reward, self.episode_over, {}
+        return self.screen, self.reward, self.episode_over, {}
 
     def _take_action(self, action, channel_current):
         tmp_pad = channel_current
-        self.reward = 0
         self.episode_over = False
+        self.reward = 0
         if action==1:
           if tmp_pad=='A':
             tmp_pad = 'X'
+            self.reward = -1
           else:
             tmp_pad = 'B'
             self.reward = 1
     
         self.lane_traffic = self.lane_traffic[1:cfg_set.len_lane]+tmp_pad
-        self.screen[0] = np.array([ord(self.lane_traffic[i]) for i in range(len(self.lane_traffic))],dtype=np.int8)
+        self.screen[0] = np.array([ord(self.lane_traffic[i]) for i in range(len(self.lane_traffic))],dtype=np.float16)
         
         self.num_sample = self.num_sample + 1
         if self.num_sample == cfg_set.num_sample_per_episode:

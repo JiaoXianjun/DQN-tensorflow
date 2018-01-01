@@ -15,7 +15,7 @@ class ReplayMemory:
     self.memory_size = config.memory_size
     self.actions = np.empty(self.memory_size, dtype = np.uint8)
     self.rewards = np.empty(self.memory_size, dtype = np.integer)
-    self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.int8)
+    self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.float16)
     self.terminals = np.empty(self.memory_size, dtype = np.bool)
     self.history_length = config.history_length
     self.dims = (config.screen_height, config.screen_width)
@@ -24,8 +24,8 @@ class ReplayMemory:
     self.current = 0
 
     # pre-allocate prestates and poststates for minibatch
-    self.prestates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.int8)
-    self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.int8)
+    self.prestates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
+    self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
 
   def add(self, screen, reward, action, terminal):
     assert screen.shape == self.dims

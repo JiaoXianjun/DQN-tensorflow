@@ -191,11 +191,11 @@ class Agent(BaseModel):
             [None, self.history_length, self.screen_height, self.screen_width], name='s_t')
 
       self.l1, self.w['l1_w'], self.w['l1_b'] = conv2d(self.s_t,
-          32, [8, 8], [4, 4], initializer, activation_fn, self.cnn_format, name='l1')
+          32, [1, 8], [4, 4], initializer, activation_fn, self.cnn_format, name='l1')
       self.l2, self.w['l2_w'], self.w['l2_b'] = conv2d(self.l1,
-          64, [4, 4], [2, 2], initializer, activation_fn, self.cnn_format, name='l2')
+          64, [1, 4], [2, 2], initializer, activation_fn, self.cnn_format, name='l2')
       self.l3, self.w['l3_w'], self.w['l3_b'] = conv2d(self.l2,
-          64, [3, 3], [1, 1], initializer, activation_fn, self.cnn_format, name='l3')
+          64, [1, 3], [1, 1], initializer, activation_fn, self.cnn_format, name='l3')
 
       shape = self.l3.get_shape().as_list()
       self.l3_flat = tf.reshape(self.l3, [-1, reduce(lambda x, y: x * y, shape[1:])])
@@ -238,11 +238,11 @@ class Agent(BaseModel):
             [None, self.history_length, self.screen_height, self.screen_width], name='target_s_t')
 
       self.target_l1, self.t_w['l1_w'], self.t_w['l1_b'] = conv2d(self.target_s_t, 
-          32, [8, 8], [4, 4], initializer, activation_fn, self.cnn_format, name='target_l1')
+          32, [1, 8], [4, 4], initializer, activation_fn, self.cnn_format, name='target_l1')
       self.target_l2, self.t_w['l2_w'], self.t_w['l2_b'] = conv2d(self.target_l1,
-          64, [4, 4], [2, 2], initializer, activation_fn, self.cnn_format, name='target_l2')
+          64, [1, 4], [2, 2], initializer, activation_fn, self.cnn_format, name='target_l2')
       self.target_l3, self.t_w['l3_w'], self.t_w['l3_b'] = conv2d(self.target_l2,
-          64, [3, 3], [1, 1], initializer, activation_fn, self.cnn_format, name='target_l3')
+          64, [1, 3], [1, 1], initializer, activation_fn, self.cnn_format, name='target_l3')
 
       shape = self.target_l3.get_shape().as_list()
       self.target_l3_flat = tf.reshape(self.target_l3, [-1, reduce(lambda x, y: x * y, shape[1:])])
