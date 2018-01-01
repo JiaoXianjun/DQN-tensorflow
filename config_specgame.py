@@ -1,9 +1,11 @@
+import cfg_set
+
 class AgentConfig(object):
-  scale = 10000
+  scale = 1000
   display = False
 
-  max_step = 5000 * scale
-  memory_size = 100 * scale
+  max_step = 500 * scale
+  memory_size = 10 * scale
 
   batch_size = 32
   random_start = 30
@@ -36,8 +38,8 @@ class EnvironmentConfig(object):
   #env_name = 'Breakout-v0'
   env_name = 'specgame_env-v0'
 
-  screen_width  = 84
-  screen_height = 84
+  screen_width  = cfg_set.len_lane
+  screen_height = 1
   max_reward = 1.
   min_reward = -1.
 

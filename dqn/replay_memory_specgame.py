@@ -4,7 +4,6 @@ import os
 import random
 import logging
 import numpy as np
-import cfg_set
 
 from .utils import save_npy, load_npy
 
@@ -14,28 +13,21 @@ class ReplayMemory:
 
     self.cnn_format = config.cnn_format
     self.memory_size = config.memory_size
-    #self.actions = np.empty(self.memory_size, dtype = np.uint8)
-    #self.rewards = np.empty(self.memory_size, dtype = np.integer)
-    #self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.float16)
-    #self.terminals = np.empty(self.memory_size, dtype = np.bool)
-    #self.history_length = config.history_length
-    self.actions = np.empty(cfg_set.num_lane_per_episode, dtype = np.uint8)
-    self.rewards = np.empty(cfg_set.num_lane_per_episode, dtype = np.integer)
-    self.screens = np.empty((cfg_set.num_lane_per_episode, 1, cfg_set.len_lane), dtype = np.int8)
-    self.terminals = np.empty(cfg_set.num_lane_per_episode, dtype = np.bool)
-    self.history_length = cfg_set.num_history
-    #self.dims = (config.screen_height, config.screen_width)
-    self.dims = (1,cfg_set.len_lane)
+    self.actions = np.empty(self.memory_size, dtype = np.uint8)
+    self.rewards = np.empty(self.memory_size, dtype = np.integer)
+    self.screens = np.empty((self.memory_size, config.screen_height, config.screen_width), dtype = np.int8)
+    self.terminals = np.empty(self.memory_size, dtype = np.bool)
+    self.history_length = config.history_length
+    self.dims = (config.screen_height, config.screen_width)
     self.batch_size = config.batch_size
     self.count = 0
     self.current = 0
 
     # pre-allocate prestates and poststates for minibatch
-    self.prestates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
-    self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.float16)
+    self.prestates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.int8)
+    self.poststates = np.empty((self.batch_size, self.history_length) + self.dims, dtype = np.int8)
 
   def add(self, screen, reward, action, terminal):
-    print screen.shape
     assert screen.shape == self.dims
     # NB! screen is post-state, after action and reward
     self.actions[self.current] = action
@@ -43,8 +35,7 @@ class ReplayMemory:
     self.screens[self.current, ...] = screen
     self.terminals[self.current] = terminal
     self.count = max(self.count, self.current + 1)
-    #self.current = (self.current + 1) % self.memory_size
-    self.current = (self.current + 1) % cfg_set.num_lane_per_episode
+    self.current = (self.current + 1) % self.memory_size
 
   def getState(self, index):
     assert self.count > 0, "replay memory is empy, use at least --random_steps 1"
